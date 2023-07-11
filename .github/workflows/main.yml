@@ -11,14 +11,11 @@ jobs:
         run: echo "${{ toJSON(github.event) }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE: ${{ github.event.issue.html_url }}
-      - name: Install packages
-        run: gh pr 2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE: ${{ github.event.issue.html_url }}
       - name: gh pr status
-        run: gh pr status 2
+        run: gh pr status ${{ toJSON(github.event) }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ISSUE: ${{ github.event.issue.html_url }}
+      - name: gh pr comment
+        run: gh pr comment ${{ toJSON(github.event) }} --body "Hi from GitHub CLI"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
