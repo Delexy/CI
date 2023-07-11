@@ -10,10 +10,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-      - name: Setup Node 18.x
+      - name: Setup Node 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '16.x'
 
       - name: Install packages
         run: npm ci
@@ -22,7 +22,7 @@ jobs:
         run: npm run test-ci
 
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
 
       - name: e2e tests
         run: npm run e2e-ci
