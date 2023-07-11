@@ -7,7 +7,18 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Get github
+        run: echo "${{ toJSON(github.event) }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.html_url }}
       - name: Install packages
-        run: gh pr 1
+        run: gh pr 2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.html_url }}
       - name: gh pr status
-        run: gh pr checkout 12
+        run: gh pr status 2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.issue.html_url }}
