@@ -19,7 +19,7 @@ it('по адресу /about должна открываться страниц�
     </MemoryRouter>
   );
 
-  const { getByTestId } = render(application);
+  const { getByTestId } = render(application1);
 
   expect(getByTestId("page-title").textContent).toEqual("About");
 });
