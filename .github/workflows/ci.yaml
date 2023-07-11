@@ -20,6 +20,12 @@ jobs:
 
       - name: Build
         run: npm run build
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: build
+          path: build/
+          retention-days: 30
 
       - name: Unit tests
         run: npm run test-ci
@@ -28,7 +34,7 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: e2e tests
-        run: npm run e2e
+        run: npm run e2e-ci
       - uses: actions/upload-artifact@v3
         if: always()
         with:
