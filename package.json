@@ -32,19 +32,8 @@
     "test": "react-scripts test",
     "lint": "eslint",
     "e2e": "playwright test --project=chromium && playwright show-report",
-    "test-ci": "CI=true npm test -- --reporters=\"default\" --reporters=\"jest-html-reporter\" --reporters=\"jest-teamcity\"",
-    "commitlint": "commitlint --edit"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "rules": {
-      "testing-library/prefer-screen-queries": "off",
-      "testing-library/no-debugging-utils": "off",
-      "@typescript-eslint/no-unused-vars": "off"
-    }
+    "e2e-ci": "CI=true playwright test --project=chromium",
+    "test-ci": "CI=true npm test -- --reporters=\"default\" --reporters=\"jest-html-reporter\" --reporters=\"jest-teamcity\""
   },
   "browserslist": {
     "production": [
@@ -64,7 +53,7 @@
     "@playwright/test": "^1.28.0",
     "@types/react-helmet": "^6.1.5",
     "eslint": "^8.44.0",
-    "husky": "^8.0.3",
-    "jest-html-reporter": "^3.7.0"
+    "jest-html-reporter": "^3.7.0",
+    "lefthook": "^1.4.4"
   }
 }
