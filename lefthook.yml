@@ -1,4 +1,4 @@
 commit-msg:
-  commands:
-    lint-commit-msg:
-      run: npx commitlint --edit
+  scripts:
+    'commit_check':
+      runner: bash
