@@ -11,10 +11,6 @@ jobs:
         run: echo "${{ toJSON(github.event) }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: gh pr status
-        run: gh pr status ${{ toJSON(github.event) }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: gh pr comment
         run: gh pr comment ${{ toJSON(github.event) }} --body "Hi from GitHub CLI"
         env:
