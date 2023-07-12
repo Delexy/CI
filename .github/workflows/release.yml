@@ -60,6 +60,7 @@ jobs:
           path: ./build
 
   deploy:
+    needs: release
     permissions:
       pages: write      # to deploy to Pages
       id-token: write
