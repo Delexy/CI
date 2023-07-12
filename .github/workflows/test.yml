@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
+      contents: read
+      issues: write
+      
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,7 +22,7 @@ jobs:
       # Формирование информации о пользователе
       - name: Get current commit info
         run: |
-          echo "git log --name-status HEAD^..HEAD" >> changelog.md
+          git log --name-status HEAD^..HEAD >> changelog.md
           echo "____________________________________" >> changelog.md
       # Формирование коммитов
       - name: Get current and previous tag
