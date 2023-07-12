@@ -27,15 +27,15 @@ jobs:
       # Формирование коммитов
       - name: Get current and previous tag
         run: |
-          echo "PREV_TAG=git describe --abbrev=0 --tags `git rev-list --tags --skip=1  --max-count=1`" >> $GITHUB_ENV
-          echo "CUR_TAG=git describe --abbrev=0 --tags" >> $GITHUB_ENV
+          echo PREV_TAG=$(git describe --abbrev=0 --tags $(git rev-list --tags --skip=1  --max-count=1)) >> $GITHUB_ENV
+          echo CUR_TAG=$(git describe --abbrev=0 --tags) >> $GITHUB_ENV
       - name: Get tags hashes
         run: |
-          echo "PREV_HASH=git show-ref -s ${{ env.PREV_TAG }}" >> $GITHUB_ENV
-          echo "CUR_HASH=git show-ref -s ${{ env.CUR_TAG }}" >> $GITHUB_ENV
-      #- name: Git oneline commits
-       # run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
-        # Формирование коммитов
+          echo PREV_HASH=$(git show-ref -s ${{ env.PREV_TAG }}) >> $GITHUB_ENV
+          echo CUR_HASH=$(git show-ref -s ${{ env.CUR_TAG }}) >> $GITHUB_ENV
+      - name: Git oneline commits
+        run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
+      # Формирование коммитов
       - name: Create issue
         env:
           GH_TOKEN: ${{ github.token }}
