@@ -16,13 +16,5 @@ jobs:
       # Формирование changelog
       - name: Get current and previous tag
         run: |
-          echo "PREV_TAG=git describe --abbrev=0 --tags `git rev-list --tags --skip=1  --max-count=1`" >> $GITHUB_ENV
-          echo "CUR_TAG=git describe --abbrev=0 --tags" >> $GITHUB_ENV
-      - name: Generate changelog
-        id: changelog
-        uses: metcalfc/changelog-generator@v4.1.0 #TODO: bump this after release
-        with:
-          myToken: ${{ secrets.GITHUB_TOKEN }}
-          head-ref: ${{ env.PREV_TAG }}
-          base-ref: ${{ env.CUR_TAG }}
-          fetch: false
+          git describe --abbrev=0 --tags `git rev-list --tags --skip=1  --max-count=1`
+          git describe --abbrev=0 --tags
