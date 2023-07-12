@@ -19,15 +19,6 @@ jobs:
 
       - name: Install packages
         run: npm ci
-
-      - name: Install commitlint
-        run: |
-          npm install conventional-changelog-conventionalcommits
-          npm install commitlint@latest
-          echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
-
-      - name: Validate PR commits with commitlint
-        run: git log -1 --pretty=format:"%s" | npx commitlint
         
       # Билд проекта
       - name: Build
