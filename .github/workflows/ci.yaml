@@ -23,12 +23,10 @@ jobs:
       # Билд проекта
       - name: Build
         run: npm run build
-      - uses: actions/upload-artifact@v3
-        if: always()
+      - name: upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          name: build
-          path: build/
-          retention-days: 30
+          path: ./build
 
       # Тестирование
       - name: Unit tests
