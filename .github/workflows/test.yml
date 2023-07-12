@@ -32,4 +32,6 @@ jobs:
        # run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
         # Формирование коммитов
       - name: Create issue
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: gh issue create --title "RELEASE ${{ env.CUR_TAG }}" --body-file ./changelog.md
