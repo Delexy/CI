@@ -28,8 +28,8 @@ jobs:
         run: |
           echo "PREV_HASH=git show-ref -s ${{ env.PREV_TAG }}" >> $GITHUB_ENV
           echo "CUR_HASH=git show-ref -s ${{ env.CUR_TAG }}" >> $GITHUB_ENV
-      - name: Git oneline commits
-        run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
+      #- name: Git oneline commits
+       # run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
         # Формирование коммитов
       - name: Create issue
         run: gh issue create --title "RELEASE ${{ env.CUR_TAG }}" --body-file ./changelog.md
