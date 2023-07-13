@@ -50,12 +50,12 @@ jobs:
         run: echo "\n\nПри CI проверки прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/ \n Там же можно найти созданные артефакты \n\n" >> changelog.md
       # Формирование issue
       - name: Create issue
-        if: ${{ !fromJson(env.CUR_ISSUE).number }}
+        if: ${{ !fromJson(env.CUR_ISSUE)[0].number }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh issue create --title "RELEASE ${{ env.CUR_TAG }}" --body-file ./changelog.md
       - name: Add comment to exists issue
-        if: ${{ fromJson(env.CUR_ISSUE).number }}
+        if: ${{ fromJson(env.CUR_ISSUE)[0].number }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh issue comment ${{ fromJson(env.CUR_ISSUE).number }} --body-file ./changelog.md
+        run: gh issue comment ${{ fromJson(env.CUR_ISSUE)[0].number }} --body-file ./changelog.md
