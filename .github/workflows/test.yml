@@ -70,6 +70,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh issue comment ${{ fromJson(env.CUR_ISSUE)[0].number }} --body-file ./changelog.md
       - name: Get current issue
+        if: ${{ failure() || success() }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: echo NEW_ISSUE=$(gh issue list --search 'RELEASE ${{ env.CUR_TAG }}' --json number,title) >> $GITHUB_ENV
