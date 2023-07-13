@@ -38,22 +38,22 @@ jobs:
       - name: Git oneline commits
         run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
       - name: Get current issue
-        run: echo CUR_ISSUE_NAME=$(gh issue list -S "RELEASE ${{ env.CUR_TAG }}") >> $GITHUB_ENV
+        run: echo CUR_ISSUE=$(gh issue list --search 'RELEASE ${{ env.CUR_TAG }}' --json number,title) >> $GITHUB_ENV
       # Формирование результатов тестирования
       - name: Before tests fail
         if: ${{ failure() }}
-        run: echo "\n\nПри CI проверки не прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_number }}/\n Там же можно найти созданные артефакты \n\n" >> changelog.md
+        run: echo "\n\nПри CI проверки не прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/ \n Там же можно найти созданные артефакты \n\n" >> changelog.md
       - name: Before tests success
         if: ${{ !failure() }}
-        run: echo "\n\nПри CI проверки прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_number }}/\n Там же можно найти созданные артефакты \n\n" >> changelog.md
+        run: echo "\n\nПри CI проверки прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/ \n Там же можно найти созданные артефакты \n\n" >> changelog.md
       # Формирование issue
       - name: Create issue
-        if: ${{ startsWith(env.CUR_ISSUE_NAME, 'no issues match') }}
+        if: ${{ !fromJson(env.CUR_ISSUE).number }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh issue create --title "RELEASE ${{ env.CUR_TAG }}" --body-file ./changelog.md
       - name: Add comment to exists issue
-        if: ${{ !startsWith(env.CUR_ISSUE_NAME, 'no issues match') }}
+        if: ${{ fromJson(env.CUR_ISSUE).number }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh issue comment --body-file ./changelog.md
+        run: gh issue comment ${{ fromJson(env.CUR_ISSUE).number }} --body-file ./changelog.md
