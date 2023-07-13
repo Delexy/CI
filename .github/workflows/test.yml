@@ -39,7 +39,7 @@ jobs:
         run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
       - name: Get current issue
         env:
-          GH_TOKEN: ${{ github.t1oken }}
+          GH_TOKEN: ${{ github.token }}
         run: echo CUR_ISSUE=$(gh issue list --search 'RELEASE ${{ env.CUR_TAG }}' --json number,title) >> $GITHUB_ENV
       # Формирование результатов тестирования
       - name: Before tests fail
