@@ -70,17 +70,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh issue comment ${{ fromJson(env.CUR_ISSUE)[0].number }} --body-file ./changelog.md
       - name: Get current issue
-        if: ${{ failure() || success() }}
+        if: ${{ failure() || success() || fromJson(env.CUR_ISSUE)[0].number }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: echo NEW_ISSUE=$(gh issue list --search 'RELEASE ${{ env.CUR_TAG }}' --json number,title) >> $GITHUB_ENV
+        run: echo CUR_ISSUE=$(gh issue list --search 'RELEASE ${{ env.CUR_TAG }}' --json number,title) >> $GITHUB_ENV
       - name: Open issue if not ok
         env:
           GH_TOKEN: ${{ github.token }}
         if: ${{ failure() }}
-        run: gh issue reopen ${{ fromJson(env.NEW_ISSUE)[0].number }}
+        run: gh issue reopen ${{ fromJson(env.CUR_ISSUE)[0].number }}
       - name: Close issue if ok
         env:
           GH_TOKEN: ${{ github.token }}
         if: ${{ !failure() }}
-        run: gh issue close ${{ fromJson(env.NEW_ISSUE)[0].number }}
+        run: gh issue close ${{ fromJson(env.CUR_ISSUE)[0].number }}
