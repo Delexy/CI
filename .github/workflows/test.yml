@@ -57,7 +57,7 @@ jobs:
         if: ${{ !fromJson(env.CUR_ISSUE)[0].number }}
         env:
           GH_TOKEN: ${{ github.token }}
-        run: echo CREATED_ISSUE_NUMBER=$(gh issue create --title "RELEASE ${{ env.CUR_TAG }}" --body-file ./changelog.md | sed -e 's|.*(issues/.*$)|1|') >> $GITHUB_ENV
+        run: echo CREATED_ISSUE_NUMBER=$(gh issue create --title "RELEASE ${{ env.CUR_TAG }}" --body-file ./changelog.md) >> $GITHUB_ENV
       - name: Add comment to exists issue
         if: ${{ fromJson(env.CUR_ISSUE)[0].number }}
         env:
