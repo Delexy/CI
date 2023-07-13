@@ -55,11 +55,15 @@ jobs:
           path: ./build
 
   changelog:
+    needs: release
     uses: ./.github/workflows/changelog.yml
     secrets: inherit
+    permissions:
+      id-token: write
+      issues: write
 
   deploy:
-    needs: release
+    needs: [release, changelog]
     permissions:
       pages: write # to deploy to Pages
       id-token: write
