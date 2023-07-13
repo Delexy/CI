@@ -1,12 +1,10 @@
-name: Test
+name: Changelog
 on:
-  push:
-    tags:
-      - "v[0-9]+"
+  workflow_call
 
 jobs:
   changelog:
-    name: Testing and release
+    name: create changelog and release result
     runs-on: ubuntu-latest
     permissions:
       id-token: write # This is required for requesting the JWT
@@ -24,6 +22,7 @@ jobs:
       # Формирование информации о пользователе
       - name: Get current commit info
         run: |
+          echo ## Last commit
           git log --name-status HEAD^..HEAD >> changelog.md
           echo "____________________________________" >> changelog.md
       # Формирование коммитов
@@ -36,7 +35,9 @@ jobs:
           echo PREV_HASH=$(git show-ref -s ${{ env.PREV_TAG }}) >> $GITHUB_ENV
           echo CUR_HASH=$(git show-ref -s ${{ env.CUR_TAG }}) >> $GITHUB_ENV
       - name: Git oneline commits
-        run: git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
+        run: |
+          echo "## Changelog" >> changelog.md
+          git log ${{ env.PREV_HASH }}..${{ env.CUR_HASH }} --oneline >> changelog.md
       - name: Get current issue
         env:
           GH_TOKEN: ${{ github.token }}
@@ -45,11 +46,13 @@ jobs:
       - name: Before tests fail
         if: ${{ failure() }}
         run: |
+          echo "## Результаты тестов" >> changelog.md
           echo "При CI проверки НЕ прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/" >> changelog.md
           echo "Там же можно найти созданные артефакты" >> changelog.md
       - name: Before tests success
         if: ${{ !failure() }}
         run: |
+          echo "## Результаты тестов" >> changelog.md
           echo "При CI проверки прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/" >> changelog.md
           echo "Там же можно найти созданные артефакты" >> changelog.md
       # Формирование issue
