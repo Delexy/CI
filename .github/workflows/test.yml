@@ -45,19 +45,13 @@ jobs:
       - name: Before tests fail
         if: ${{ failure() }}
         run: |
-          echo `
-          
-          При CI проверки НЕ прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/
-          
-          Там же можно найти созданные артефакты` >> changelog.md
+          echo "При CI проверки НЕ прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/" >> changelog.md
+          echo "Там же можно найти созданные артефакты" >> changelog.md
       - name: Before tests success
         if: ${{ !failure() }}
         run: |
-          echo `
-          
-          При CI проверки прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/
-          
-          Там же можно найти созданные артефакты` >> changelog.md
+          echo "При CI проверки прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_id }}/" >> changelog.md
+          echo "Там же можно найти созданные артефакты" >> changelog.md
       # Формирование issue
       - name: Create issue
         if: ${{ !fromJson(env.CUR_ISSUE)[0].number }}
