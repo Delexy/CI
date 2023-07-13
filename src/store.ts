@@ -13,19 +13,12 @@ const DEFAULT_STATE = { items, done: {}, text: "" };
 // actions
 export const addItem = (text: string) => ({ type: "ADD_ITEM", text } as const);
 export const setText = (text: string) => ({ type: "SET_TEXT", text } as const);
-export const setDone = (index: number, done: boolean) =>
-  ({ type: "SET_DONE", index, done } as const);
+export const setDone = (index: number, done: boolean) => ({ type: "SET_DONE", index, done } as const);
 
-export type Action =
-  | ReturnType<typeof addItem>
-  | ReturnType<typeof setText>
-  | ReturnType<typeof setDone>;
+export type Action = ReturnType<typeof addItem> | ReturnType<typeof setText> | ReturnType<typeof setDone>;
 
 // reducer
-const rootReducer = (
-  state: ApplicationState = DEFAULT_STATE,
-  action: Action
-) => {
+const rootReducer = (state: ApplicationState = DEFAULT_STATE, action: Action) => {
   switch (action.type) {
     case "ADD_ITEM":
       return {
