@@ -44,16 +44,16 @@ jobs:
         if: ${{ failure() }}
         run: echo "\n\nПри CI проверки не прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_number }}/\n Там же можно найти созданные артефакты \n\n" >> changelog.md
       - name: Before tests success
-        if: ${{ failure() }}
+        if: ${{ !failure() }}
         run: echo "\n\nПри CI проверки прошли, посмотреть результат можно по ссылке https://github.com/Delexy/CI/actions/runs/${{ github.run_number }}/\n Там же можно найти созданные артефакты \n\n" >> changelog.md
       # Формирование issue
       - name: Create issue
-        if: ${{ startsWith('no issues match', env.CUR_ISSUE_NAME) }}
+        if: ${{ startsWith(env.CUR_ISSUE_NAME, 'no issues match') }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh issue create --title "RELEASE ${{ env.CUR_TAG }}" --body-file ./changelog.md
       - name: Add comment to exists issue
-        if: ${{ !startsWith('no issues match', env.CUR_ISSUE_NAME) }}
+        if: ${{ !startsWith(env.CUR_ISSUE_NAME, 'no issues match') }}
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh issue comment --body-file ./changelog.md
