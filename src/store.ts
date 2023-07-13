@@ -52,7 +52,6 @@ const rootReducer = (
 };
 
 // epics
-
 export function initStore() {
   const store = createStore<ApplicationState, Action, {}, {}>(rootReducer);
 
