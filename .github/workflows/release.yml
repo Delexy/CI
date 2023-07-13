@@ -55,6 +55,7 @@ jobs:
           path: ./build
 
   changelog:
+    name: Create release info
     needs: release
     uses: ./.github/workflows/changelog.yml
     secrets: inherit
