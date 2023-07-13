@@ -69,7 +69,16 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh issue comment ${{ fromJson(env.CUR_ISSUE)[0].number }} --body-file ./changelog.md
-      - name: Before tests success
+      - name: Get current issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: echo CUR_ISSUE=$(gh issue list --search 'RELEASE ${{ env.CUR_TAG }}' --json number,title) >> $GITHUB_ENV
+      - name: Open issue if not ok
+        env:
+          GH_TOKEN: ${{ github.token }}
+        if: ${{ failure() }}
+        run: gh issue open ${{ fromJson(env.CUR_ISSUE)[0].number }}
+      - name: Close issue if ok
         env:
           GH_TOKEN: ${{ github.token }}
         if: ${{ !failure() }}
