@@ -78,7 +78,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         if: ${{ failure() }}
-        run: gh issue open ${{ fromJson(env.NEW_ISSUE)[0].number }}
+        run: gh issue reopen ${{ fromJson(env.NEW_ISSUE)[0].number }}
       - name: Close issue if ok
         env:
           GH_TOKEN: ${{ github.token }}
