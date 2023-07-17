@@ -27,6 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "prepare": "husky install",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "test": "react-scripts test",
